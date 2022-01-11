@@ -98,15 +98,6 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
   }
 }
 
-resource "aws_network_interface" "experimental_terraform_ec2_netinterface1" {
-  subnet_id   = aws_subnet.experimental_terraform_vpc_subnet.id
-  private_ips = ["10.10.10.20"]
-
-  tags = {
-    Name = "experimental_terraform_ec2_netinterface1"
-  }
-}
-
 resource "aws_instance" "experimental_terraform_ec2" {
   ami           = "ami-0fb653ca2d3203ac"
   instance_type = "t2.micro"
@@ -114,12 +105,6 @@ resource "aws_instance" "experimental_terraform_ec2" {
   network_interface {
     network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface0.id
     device_index          = 0
-    delete_on_termination = true
-  }
-
-  network_interface {
-    network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface1.id
-    device_index          = 1
     delete_on_termination = true
   }
 
