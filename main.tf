@@ -1,28 +1,28 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "3.71.0"
     }
   }
 }
 
 variable "aws_accesskey" {
-  type        = string
+  type = string
 }
 
 variable "aws_secretkey" {
-  type        = string
+  type = string
 }
 
 provider "aws" {
-  region = "us-east-2"
+  region     = "us-east-2"
   access_key = var.aws_accesskey
   secret_key = var.aws_secretkey
 }
 
 resource "aws_vpc" "experimental_terraform_vpc" {
-  cidr_block       = "10.10.0.0/16"
+  cidr_block = "10.10.0.0/16"
   tags = {
     Name = "experimental_terraform"
   }
@@ -63,24 +63,24 @@ resource "aws_security_group" "experimental_terraform_ec2_sg" {
   vpc_id      = aws_vpc.experimental_terraform_vpc.id
 
   ingress {
-    description      = "SSH"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "SSH"
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "SSH"
   }
 
   ingress {
-    description      = "HTTP"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "HTTP"
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "HTTP"
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
 
   }
 
@@ -112,20 +112,20 @@ resource "aws_instance" "experimental_terraform_ec2" {
   instance_type = "t2.micro"
 
   network_interface {
-    network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface0.id
-    device_index         = 0
+    network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface0.id
+    device_index          = 0
     delete_on_termination = true
   }
-  
+
   network_interface {
-    network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface1.id
-    device_index         = 1
+    network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface1.id
+    device_index          = 1
     delete_on_termination = true
   }
 
   associate_public_ip_address = true
-  vpc_security_group_ids = aws_security_group.experimental_terraform_ec2_sg.id
-  user_data  = "${file("nginx_install.sh")}"
+  vpc_security_group_ids      = [aws_security_group.experimental_terraform_ec2_sg.id]
+  user_data                   = file("nginx_install.sh")
 
   root_block_device {
     delete_on_termination = true
