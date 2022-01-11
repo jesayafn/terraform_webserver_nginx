@@ -69,6 +69,13 @@ resource "aws_security_group" "experimental_terraform_ec2_sg" {
     protocol         = "SSH"
   }
 
+  ingress {
+    description      = "HTTP"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "HTTP"
+  }
+
   egress {
     from_port        = 0
     to_port          = 0
