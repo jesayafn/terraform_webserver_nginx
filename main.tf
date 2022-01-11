@@ -91,7 +91,7 @@ resource "aws_security_group" "experimental_terraform_ec2_sg" {
 
 resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
   subnet_id   = aws_subnet.experimental_terraform_vpc_subnet.id
-  private_ips = ["10.10.10.1"]
+  private_ips = ["10.10.10.10"]
 
   tags = {
     Name = "experimental_terraform_ec2_netinterface0"
@@ -100,7 +100,7 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
 
 resource "aws_network_interface" "experimental_terraform_ec2_netinterface1" {
   subnet_id   = aws_subnet.experimental_terraform_vpc_subnet.id
-  private_ips = ["10.10.10.11"]
+  private_ips = ["10.10.10.20"]
 
   tags = {
     Name = "experimental_terraform_ec2_netinterface1"
