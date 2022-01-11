@@ -114,15 +114,22 @@ resource "aws_instance" "experimental_terraform_ec2" {
   network_interface {
     network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface0.id
     device_index         = 0
+    delete_on_termination = true
   }
   
   network_interface {
     network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface1.id
     device_index         = 1
+    delete_on_termination = true
   }
 
   associate_public_ip_address = true
-  
+
+  provisioner "nginx" {
+    source = "nginx_install.sh"
+    destination = "/nginx_install.sh"
+  }
+
   root_block_device {
     delete_on_termination = true
   }
