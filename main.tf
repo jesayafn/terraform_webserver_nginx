@@ -125,10 +125,7 @@ resource "aws_instance" "experimental_terraform_ec2" {
 
   associate_public_ip_address = true
 
-  provisioner "nginx" {
-    source = "nginx_install.sh"
-    destination = "/nginx_install.sh"
-  }
+  user_data = "${file("nginx_install.sh")}"
 
   root_block_device {
     delete_on_termination = true
