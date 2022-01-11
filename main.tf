@@ -124,7 +124,7 @@ resource "aws_instance" "experimental_terraform_ec2" {
   }
 
   associate_public_ip_address = true
-  security_groups = aws_security_group.experimental_terraform_ec2_sg
+  vpc_security_group_ids = aws_security_group.experimental_terraform_ec2_sg.id
   user_data  = "${file("nginx_install.sh")}"
 
   root_block_device {
