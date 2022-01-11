@@ -7,10 +7,18 @@ terraform {
   }
 }
 
+variable "aws_accesskey" {
+  type        = string
+}
+
+variable "aws_secretkey" {
+  type        = string
+}
+
 provider "aws" {
   region = "us-east-2"
-  access_key = "AKIATD6KDN4QVIYX5DM7"
-  secret_key = "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"
+  access_key = var.aws_accesskey
+  secret_key = var.aws_secretkey
 }
 
 resource "aws_vpc" "experimental_terraform_vpc" {
@@ -83,16 +91,32 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
   }
 }
 
+resource "aws_network_interface" "experimental_terraform_ec2_netinterface1" {
+  subnet_id   = aws_subnet.experimental_terraform_vpc_subnet.id
+  private_ips = ["10.10.10.11"]
+
+  tags = {
+    Name = "experimental_terraform_ec2_netinterface1"
+  }
+}
+
 resource "aws_instance" "experimental_terraform_ec2" {
   ami           = "ami-0fb653ca2d3203ac"
   instance_type = "t2.micro"
 
   network_interface {
-    network_interface_id = aws_network_interface.foo.id
+    network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface0.id
     device_index         = 0
   }
+  
+  network_interface {
+    network_interface_id = aws_network_interface.experimental_terraform_ec2_netinterface1.id
+    device_index         = 1
+  }
 
-  credit_specification {
-    cpu_credits = "unlimited"
+  associate_public_ip_address = true
+  
+  root_block_device {
+    delete_on_termination = true
   }
 }
