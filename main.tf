@@ -50,7 +50,7 @@ resource "aws_route_table" "experimental_terraform_subnet_routetable" {
   vpc_id = aws_vpc.experimental_terraform_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/24"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.experimental_terraform_vpc_igw.id
   }
 
