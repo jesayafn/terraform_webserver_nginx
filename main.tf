@@ -123,6 +123,7 @@ resource "aws_instance" "experimental_terraform_ec2" {
     device_index         = 0
   }
 
+  
   user_data = "${file("nginx_install.sh")}"
   root_block_device {
     delete_on_termination = true
