@@ -110,7 +110,6 @@ resource "aws_instance" "experimental_terraform_ec2" {
   }
 
   user_data              = file("nginx_install.sh")
-  vpc_security_group_ids = [aws_security_group.experimental_terraform_ec2_sg.id]
   root_block_device {
     delete_on_termination = true
   }
