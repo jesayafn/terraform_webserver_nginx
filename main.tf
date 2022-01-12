@@ -7,14 +7,6 @@ terraform {
   }
 }
 
-variable "aws_accesskey" {
-  type = string
-}
-
-variable "aws_secretkey" {
-  type = string
-}
-
 provider "aws" {
   region     = "us-east-2"
   access_key = var.aws_accesskey
@@ -128,8 +120,4 @@ resource "aws_instance" "experimental_terraform_ec2" {
   root_block_device {
     delete_on_termination = true
   }
-}
-
-output "public_ip_ec2" {
-  value = aws_instance.experimental_terraform_ec2.public_ip
 }
