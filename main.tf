@@ -31,7 +31,7 @@ resource "aws_vpc" "experimental_terraform_vpc" {
 resource "aws_subnet" "experimental_terraform_vpc_subnet" {
   vpc_id     = aws_vpc.experimental_terraform_vpc.id
   cidr_block = "10.10.10.0/24"
-
+  map_public_ip_on_launch = true
   tags = {
     Name = "experimental_terraform"
   }
@@ -101,7 +101,7 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
 resource "aws_instance" "experimental_terraform_ec2" {
   ami           = "ami-0fb653ca2d3203ac1"
   instance_type = "t2.micro"
-
+  associate_public_ip_address = true
 
   network_interface {
     network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface0.id
