@@ -101,19 +101,22 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
 resource "aws_instance" "experimental_terraform_ec2" {
   ami           = "ami-0fb653ca2d3203ac"
   instance_type = "t2.micro"
-  associate_public_ip_address = true
 
-  
+
   network_interface {
     network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface0.id
     device_index          = 0
     delete_on_termination = true
   }
-  
-  vpc_security_group_ids      = [aws_security_group.experimental_terraform_ec2_sg.id]
-  user_data                   = file("nginx_install.sh")
+
+  vpc_security_group_ids = [aws_security_group.experimental_terraform_ec2_sg.id]
+  user_data              = file("nginx_install.sh")
 
   root_block_device {
     delete_on_termination = true
   }
+}
+
+output "public_ip_ec2" {
+  value = aws_instance.experimental_terraform_ec2.public_ip
 }
