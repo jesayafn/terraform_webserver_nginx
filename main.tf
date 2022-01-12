@@ -99,7 +99,7 @@ resource "aws_network_interface" "experimental_terraform_ec2_netinterface0" {
 }
 
 resource "aws_instance" "experimental_terraform_ec2" {
-  ami           = "ami-0fb653ca2d3203ac"
+  ami           = "ami-0fb653ca2d3203ac1"
   instance_type = "t2.micro"
 
 
@@ -109,8 +109,8 @@ resource "aws_instance" "experimental_terraform_ec2" {
     delete_on_termination = true
   }
 
-  user_data = file("nginx_install.sh")
-
+  user_data              = file("nginx_install.sh")
+  vpc_security_group_ids = [aws_security_group.experimental_terraform_ec2_sg.id]
   root_block_device {
     delete_on_termination = true
   }
