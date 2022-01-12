@@ -106,7 +106,6 @@ resource "aws_instance" "experimental_terraform_ec2" {
   network_interface {
     network_interface_id  = aws_network_interface.experimental_terraform_ec2_netinterface0.id
     device_index          = 0
-    delete_on_termination = true
   }
 
   user_data              = file("nginx_install.sh")
