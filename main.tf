@@ -57,7 +57,7 @@ resource "aws_route_table_association" "experimental_terraform_pubsub_routetable
 }
 
 resource "aws_security_group" "experimental_terraform_ec2" {
-  vpc_id      = aws_vpc.experimental_terraform.id
+  vpc_id = aws_vpc.experimental_terraform.id
 
   ingress {
     description = "SSH"
@@ -113,13 +113,13 @@ resource "aws_instance" "experimental_terraform" {
     network_interface_id = aws_network_interface.experimental_terraform_ec2_eth0.id
     device_index         = 0
   }
-  
-  user_data = "${file("nginx_install.sh")}"
+
+  user_data = file("nginx_install.sh")
   root_block_device {
     delete_on_termination = true
   }
 
   tags = {
-      Name = "experimental_terraform"
+    Name = "experimental_terraform"
   }
 }
